@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	baseURL = "http://169.254.169.254" // no trailing slash '/'
+	baseUrl = "http://169.254.169.254" // no trailing slash '/'
 )
 
 var (
@@ -46,7 +46,7 @@ type MetadataCredentials struct {
 	Code            string
 	LastUpdated     time.Time
 	Type            string
-	AccessKeyID     string
+	AccessKeyId     string
 	SecretAccessKey string
 	Token           string
 	Expiration      time.Time
@@ -179,7 +179,7 @@ func NewGET(path string) *http.Request {
 }
 
 func handleCredentials(apiVersion, subpath string, c *ec2metaproxy.ContainerService, w http.ResponseWriter, r *http.Request) {
-	resp, err := instanceServiceClient.RoundTrip(NewGET(baseURL + "/" + apiVersion + "/meta-data/iam/security-credentials/"))
+	resp, err := instanceServiceClient.RoundTrip(NewGET(baseUrl + "/" + apiVersion + "/meta-data/iam/security-credentials/"))
 
 	if err != nil {
 		log.Error("Error requesting creds path for API version ", apiVersion, ": ", err)
@@ -217,7 +217,7 @@ func handleCredentials(apiVersion, subpath string, c *ec2metaproxy.ContainerServ
 			Code:            "Success",
 			LastUpdated:     role.LastUpdated,
 			Type:            "AWS-HMAC",
-			AccessKeyID:     role.Credentials.AccessKey,
+			AccessKeyId:     role.Credentials.AccessKey,
 			SecretAccessKey: role.Credentials.SecretKey,
 			Token:           role.Credentials.Token,
 			Expiration:      role.Credentials.Expiration,
@@ -255,7 +255,7 @@ func main() {
 			return
 		}
 
-		proxyReq, err := http.NewRequest(r.Method, fmt.Sprintf("%s%s", baseURL, r.URL.Path), r.Body)
+		proxyReq, err := http.NewRequest(r.Method, fmt.Sprintf("%s%s", baseUrl, r.URL.Path), r.Body)
 
 		if err != nil {
 			log.Error("Error creating proxy http request: ", err)

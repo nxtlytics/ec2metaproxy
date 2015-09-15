@@ -17,7 +17,7 @@ type RoleArn struct {
 	value     string
 	path      string
 	name      string
-	accountID string
+	accountId string
 }
 
 func NewRoleArn(value string) (RoleArn, error) {
@@ -38,8 +38,8 @@ func (t RoleArn) Path() string {
 	return t.path
 }
 
-func (t RoleArn) AccountID() string {
-	return t.accountID
+func (t RoleArn) AccountId() string {
+	return t.accountId
 }
 
 func (t RoleArn) String() string {

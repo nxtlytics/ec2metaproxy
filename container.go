@@ -23,8 +23,8 @@ var (
 )
 
 type ContainerInfo struct {
-	ContainerID      string
-	ShortContainerID string
+	ContainerId      string
+	ShortContainerId string
 	SessionName      string
 	LastUpdated      time.Time
 	Error            error
@@ -52,7 +52,7 @@ type ContainerRole struct {
 
 type ContainerService struct {
 	containerIPMap map[string]*ContainerInfo
-	containerIDMap map[string]string // container id => container IP
+	containerIdMap map[string]string // container id => container IP
 	docker         *docker.Client
 	defaultRoleArn RoleArn
 	auth           aws.Auth
@@ -62,7 +62,7 @@ type ContainerService struct {
 func NewContainerService(docker *docker.Client, defaultRoleArn RoleArn, auth aws.Auth) *ContainerService {
 	return &ContainerService{
 		containerIPMap: make(map[string]*ContainerInfo),
-		containerIDMap: make(map[string]string),
+		containerIdMap: make(map[string]string),
 		docker:         docker,
 		defaultRoleArn: defaultRoleArn,
 		auth:           auth,
@@ -80,7 +80,7 @@ func (t *ContainerService) RoleForIP(containerIP string) (*ContainerRole, error)
 	}
 
 	if info.RequiresRefresh() {
-		log.Infof("Refreshing role for container %s: role=%s session=%s", info.ShortContainerID, info.RoleArn, info.SessionName)
+		log.Infof("Refreshing role for container %s: role=%s session=%s", info.ShortContainerId, info.RoleArn, info.SessionName)
 		creds, err := AssumeRole(t.auth, info.RoleArn.String(), info.SessionName)
 
 		info.LastUpdated = time.Now()
@@ -126,7 +126,7 @@ func (t *ContainerService) syncContainers() {
 	}
 
 	containerIPMap := make(map[string]*ContainerInfo)
-	containerIDMap := make(map[string]string)
+	containerIdMap := make(map[string]string)
 
 	for _, apiContainer := range apiContainers {
 		container, err := t.docker.InspectContainer(apiContainer.ID)
@@ -136,31 +136,31 @@ func (t *ContainerService) syncContainers() {
 			continue
 		}
 
-		shortContainerID := apiContainer.ID[:6]
+		shortContainerId := apiContainer.ID[:6]
 		containerIP := container.NetworkSettings.IPAddress
 
 		roleArn, roleErr := getRoleArnFromEnv(container.Config.Env, t.defaultRoleArn)
 
 		if roleArn.Empty() && roleErr == nil {
-			roleErr = fmt.Errorf("No role defined for container %s: image=%s", shortContainerID, container.Config.Image)
+			roleErr = fmt.Errorf("No role defined for container %s: image=%s", shortContainerId, container.Config.Image)
 		}
 
-		log.Infof("Container: id=%s image=%s role=%s", shortContainerID, container.Config.Image, roleArn)
+		log.Infof("Container: id=%s image=%s role=%s", shortContainerId, container.Config.Image, roleArn)
 
 		containerIPMap[containerIP] = &ContainerInfo{
-			ContainerID:      apiContainer.ID,
-			ShortContainerID: shortContainerID,
+			ContainerId:      apiContainer.ID,
+			ShortContainerId: shortContainerId,
 			SessionName:      generateSessionName(container),
 			LastUpdated:      time.Time{},
 			Error:            roleErr,
 			RoleArn:          roleArn,
 		}
 
-		containerIDMap[apiContainer.ID] = containerIP
+		containerIdMap[apiContainer.ID] = containerIP
 	}
 
 	t.containerIPMap = containerIPMap
-	t.containerIDMap = containerIDMap
+	t.containerIdMap = containerIdMap
 }
 
 func getRoleArnFromEnv(env []string, defaultArn RoleArn) (RoleArn, error) {
@@ -178,19 +178,20 @@ func getRoleArnFromEnv(env []string, defaultArn RoleArn) (RoleArn, error) {
 func maxInt(a, b int) int {
 	if a > b {
 		return a
+	} else {
+		return b
 	}
-	return b
 }
 
 func generateSessionName(container *docker.Container) string {
-	containerID := container.ID[:6]
+	containerId := container.ID[:6]
 
-	remaining := maxSessionNameLen - (len(containerID) + 2) // 2 chars for separators
+	remaining := maxSessionNameLen - (len(containerId) + 2) // 2 chars for separators
 	containerName := container.Name[1:]                     // Strip '/' prefix
 	imageName := container.Config.Image
 
 	// Split the remaining number of characters between container and image name.
-	// If one or the other is shcontainerIDMapcontainerIDMaporter than half the remaining, give the available
+	// If one or the other is shorter than half the remaining, give the available
 	// chars to the other string.
 
 	// Trim container name
@@ -209,5 +210,5 @@ func generateSessionName(container *docker.Container) string {
 		imageName = imageName[len(imageName)-imageNameLen:]
 	}
 
-	return invalidSessionNameRegexp.ReplaceAllString(fmt.Sprintf("%s-%s-%s", imageName, containerName, containerID), "_")
+	return invalidSessionNameRegexp.ReplaceAllString(fmt.Sprintf("%s-%s-%s", imageName, containerName, containerId), "_")
 }
