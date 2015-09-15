@@ -2,7 +2,7 @@ package aws_test
 
 import (
 	"fmt"
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"

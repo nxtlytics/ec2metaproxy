@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/sts"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/sts"
 )
 
 var (

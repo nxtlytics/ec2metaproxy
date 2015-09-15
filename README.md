@@ -1,7 +1,6 @@
 # Credits
-First off. This is a repackaging of this repo: [dump247/docker-ec2-metadata](https://github.com/dump247/docker-ec2-metadata)
-I didn't write this code. It works great though. Hopefully this will enable you to adopt
-it even quicker.
+This is a repackaging of this repo: [dump247/docker-ec2-metadata](https://github.com/dump247/docker-ec2-metadata)
+using Godeps and adding some helper scripts.
 
 # What is this?
 A service that runs on an EC2 instance that proxies the EC2 instance metadata service
@@ -17,7 +16,7 @@ any other endpoints where appropriate.
 
 Requires:
 
-* golang 1.2+
+* golang 1.5+
 
 The dependencies are managed with Godep.
 
@@ -135,7 +134,7 @@ our little docker instance:
 `Note: NIC_NAME should be the name of the nic that is in use on the machine.`
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/flyinprogrammer/ec2metaproxy/master/firewall_setup.sh | NIC_NAME=eth0 bash
+curl -sSL https://raw.githubusercontent.com/impossibleventures/ec2metaproxy/master/firewall_setup.sh | NIC_NAME=eth0 bash
 ```
 
 ## Run the Service
@@ -143,7 +142,7 @@ curl -sSL https://raw.githubusercontent.com/flyinprogrammer/ec2metaproxy/master/
 Run this to pull and start the container:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/flyinprogrammer/ec2metaproxy/master/start_ec2metaproxy.sh | bash
+curl -sSL https://raw.githubusercontent.com/impossibleventures/ec2metaproxy/master/start_ec2metaproxy.sh | bash
 ```
 
 # Container Role
@@ -172,8 +171,8 @@ eval $(docker-machine env docker-ec2)
 
 docker-machine ssh docker-ec2
 sudo su -
-curl -sSL https://raw.githubusercontent.com/flyinprogrammer/ec2metaproxy/master/firewall_setup.sh | NIC_NAME=eth0 bash
-curl -sSL https://raw.githubusercontent.com/flyinprogrammer/ec2metaproxy/master/start_ec2metaproxy.sh | bash -s -- --verbose
+curl -sSL https://raw.githubusercontent.com/impossibleventures/ec2metaproxy/master/firewall_setup.sh | NIC_NAME=eth0 bash
+curl -sSL https://raw.githubusercontent.com/impossibleventures/ec2metaproxy/master/start_ec2metaproxy.sh | bash -s -- --verbose
 exit
 exit
 
@@ -188,5 +187,3 @@ The MIT License (MIT)
 Copyright (c) 2014 Cory Thomas
 
 See [LICENSE](LICENSE)
-
-# Small Change trying to fix github api problem.

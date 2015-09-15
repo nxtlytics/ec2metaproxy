@@ -1,5 +1,6 @@
+.vagrant/
+.idea/
 pkg/
 bin/
-.vagrant/
 
 *.swp

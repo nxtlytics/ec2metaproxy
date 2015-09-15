@@ -17,7 +17,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
 )
 
 // The STS type encapsulates operations within a specific EC2 region.

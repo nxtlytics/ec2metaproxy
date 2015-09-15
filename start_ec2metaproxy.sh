@@ -4,4 +4,4 @@ docker run -d \
 	--net=host \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	--name=ec2metaproxy \
-	flyinprogramer/ec2metaproxy:latest "$@"
+	${DOCKER_HOST}/ec2metaproxy:latest "$@"

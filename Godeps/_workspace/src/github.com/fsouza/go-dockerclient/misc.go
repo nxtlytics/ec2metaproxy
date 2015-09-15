@@ -6,7 +6,7 @@ package docker
 
 import (
 	"bytes"
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient/engine"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient/engine"
 	"io"
 )
 

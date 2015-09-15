@@ -7,7 +7,7 @@ package docker_test
 import (
 	"archive/tar"
 	"bytes"
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
 	"io"
 	"log"
 )

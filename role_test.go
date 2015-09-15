@@ -3,7 +3,7 @@ package ec2metaproxy
 import (
 	"testing"
 
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/stretchr/testify/assert"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/stretchr/testify/assert"
 )
 
 func TestNewRoleArn(t *testing.T) {

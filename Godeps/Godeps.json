@@ -1,19 +1,7 @@
 {
-	"ImportPath": "github.com/flyinprogrammer/ec2metaproxy",
-	"GoVersion": "go1.4.2",
-	"Packages": [
-		"./..."
-	],
+	"ImportPath": "github.com/impossibleventures/ec2metaproxy",
+	"GoVersion": "go1.5",
 	"Deps": [
-		{
-			"ImportPath": "github.com/alecthomas/kingpin",
-			"Comment": "v1.3.1",
-			"Rev": "20327c1071cc1cc9de41a4d0fbea3eea11ac8115"
-		},
-		{
-			"ImportPath": "github.com/alecthomas/units",
-			"Rev": "2520fa84b92528712dc56507660230aca45d6c79"
-		},
 		{
 			"ImportPath": "github.com/cihub/seelog",
 			"Comment": "go1.1",

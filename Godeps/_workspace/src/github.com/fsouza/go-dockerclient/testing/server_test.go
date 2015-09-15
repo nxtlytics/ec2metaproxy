@@ -7,7 +7,7 @@ package testing
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
 	"math/rand"
 	"net"
 	"net/http"

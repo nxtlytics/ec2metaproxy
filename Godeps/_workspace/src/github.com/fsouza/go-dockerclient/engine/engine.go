@@ -6,7 +6,7 @@ package engine
 
 import (
 	"fmt"
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient/utils"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient/utils"
 	"io"
 	"log"
 	"os"

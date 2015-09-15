@@ -1,7 +1,7 @@
 package aws_test
 
 import (
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
 	"github.com/motain/gocheck"
 	"time"
 )

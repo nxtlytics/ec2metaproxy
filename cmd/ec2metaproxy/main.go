@@ -9,11 +9,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/flyinprogrammer/ec2metaproxy"
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/alecthomas/kingpin"
-	log "github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/cihub/seelog"
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
-	"github.com/flyinprogrammer/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
+	log "github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/cihub/seelog"
+	"github.com/alecthomas/kingpin"
+	"github.com/impossibleventures/ec2metaproxy"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
 )
 
 const (
