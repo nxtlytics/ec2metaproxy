@@ -1,8 +1,8 @@
-FROM google/golang
+FROM golang:latest
 
-WORKDIR /gopath/src/github.com/impossibleventures/ec2metaproxy
-ADD . /gopath/src/github.com/impossibleventures/ec2metaproxy
+WORKDIR /go/src/github.com/impossibleventures/ec2metaproxy
+ADD . /go/src/github.com/impossibleventures/ec2metaproxy
 RUN go get github.com/impossibleventures/ec2metaproxy/cmd/ec2metaproxy
 
 CMD []
-ENTRYPOINT ["/gopath/bin/ec2metaproxy"]
+ENTRYPOINT ["/go/bin/ec2metaproxy"]
