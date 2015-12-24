@@ -99,7 +99,7 @@ func (t *ContainerService) containerForIP(containerIP string) (*ContainerInfo, e
 	info, found := t.containerIPMap[containerIP]
 
 	if !found {
-		t.syncContainers()
+		t.SyncContainers()
 		info, found = t.containerIPMap[containerIP]
 
 		if !found {
@@ -110,7 +110,7 @@ func (t *ContainerService) containerForIP(containerIP string) (*ContainerInfo, e
 	return info, nil
 }
 
-func (t *ContainerService) syncContainers() {
+func (t *ContainerService) SyncContainers() {
 	log.Info("Synchronizing state with running docker containers")
 	apiContainers, err := t.docker.ListContainers(docker.ListContainersOptions{
 		All:    false, // only running containers

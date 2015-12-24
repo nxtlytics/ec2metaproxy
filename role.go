@@ -66,7 +66,7 @@ func (t *RoleCredentials) ExpiredAt(at time.Time) bool {
 }
 
 func AssumeRole(auth aws.Auth, roleArn, sessionName string) (*RoleCredentials, error) {
-	stsClient := sts.New(auth, aws.USEast)
+	stsClient := sts.New(auth, aws.USWest2)
 	resp, err := stsClient.AssumeRole(&sts.AssumeRoleParams{
 		DurationSeconds: 3600, // Max is 1 hour
 		ExternalId:      "",   // Empty string means not applicable

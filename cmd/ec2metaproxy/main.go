@@ -245,7 +245,18 @@ func main() {
 		panic(err)
 	}
 
-	containerService := ec2metaproxy.NewContainerService(dockerClient(), *defaultRole, auth)
+	dockerClient := dockerClient()
+	dockerEventsChan := make(chan *docker.APIEvents, 1)
+	dockerClient.AddEventListener(dockerEventsChan)
+	containerService := ec2metaproxy.NewContainerService(dockerClient, *defaultRole, auth)
+
+	go func() {
+		for {
+			e := <-dockerEventsChan
+			log.Info("Docker event: %s", e)
+			containerService.SyncContainers()
+		}
+	}()
 
 	// Proxy non-credentials requests to primary metadata service
 	http.HandleFunc("/", logHandler(func(w http.ResponseWriter, r *http.Request) {
