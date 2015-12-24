@@ -3,8 +3,8 @@ package ec2metaproxy
 import (
 	"testing"
 
-	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
-	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/stretchr/testify/assert"
+	"github.com/fsouza/go-dockerclient"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGenerateSessionName(t *testing.T) {

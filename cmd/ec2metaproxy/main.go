@@ -10,10 +10,10 @@ import (
 	"time"
 
 	"github.com/impossibleventures/ec2metaproxy"
-	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/alecthomas/kingpin"
-	log "github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/cihub/seelog"
-	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
-	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/goamz/goamz/aws"
+	"github.com/alecthomas/kingpin"
+	log "github.com/cihub/seelog"
+	"github.com/fsouza/go-dockerclient"
+	"github.com/goamz/goamz/aws"
 )
 
 const (
