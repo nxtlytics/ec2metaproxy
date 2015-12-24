@@ -19,6 +19,8 @@ import (
 	"net/url"
 	"os"
 	"time"
+
+	"github.com/impossibleventures/ec2metaproxy/Godeps/_workspace/src/github.com/vaughan0/go-ini"
 )
 
 // Defines the valid signers
@@ -39,35 +41,40 @@ type ServiceInfo struct {
 //
 // See http://goo.gl/d8BP1 for more details.
 type Region struct {
-	Name                   string // the canonical name of this region.
-	EC2Endpoint            string
-	S3Endpoint             string
-	S3BucketEndpoint       string // Not needed by AWS S3. Use ${bucket} for bucket name.
-	S3LocationConstraint   bool   // true if this region requires a LocationConstraint declaration.
-	S3LowercaseBucket      bool   // true if the region requires bucket names to be lower case.
-	SDBEndpoint            string
-	SNSEndpoint            string
-	SQSEndpoint            string
-	IAMEndpoint            string
-	ELBEndpoint            string
-	DynamoDBEndpoint       string
-	CloudWatchServicepoint ServiceInfo
-	AutoScalingEndpoint    string
-	RDSEndpoint            ServiceInfo
-	STSEndpoint            string
-	CloudFormationEndpoint string
+	Name                    string // the canonical name of this region.
+	EC2Endpoint             string
+	S3Endpoint              string
+	S3BucketEndpoint        string // Not needed by AWS S3. Use ${bucket} for bucket name.
+	S3LocationConstraint    bool   // true if this region requires a LocationConstraint declaration.
+	S3LowercaseBucket       bool   // true if the region requires bucket names to be lower case.
+	SDBEndpoint             string
+	SESEndpoint             string
+	SNSEndpoint             string
+	SQSEndpoint             string
+	IAMEndpoint             string
+	ELBEndpoint             string
+	DynamoDBEndpoint        string
+	CloudWatchServicepoint  ServiceInfo
+	AutoScalingEndpoint     string
+	RDSEndpoint             ServiceInfo
+	STSEndpoint             string
+	CloudFormationEndpoint  string
+	ECSEndpoint             string
+	DynamoDBStreamsEndpoint string
 }
 
 var Regions = map[string]Region{
 	APNortheast.Name:  APNortheast,
 	APSoutheast.Name:  APSoutheast,
 	APSoutheast2.Name: APSoutheast2,
+	EUCentral.Name:    EUCentral,
 	EUWest.Name:       EUWest,
 	USEast.Name:       USEast,
 	USWest.Name:       USWest,
 	USWest2.Name:      USWest2,
 	USGovWest.Name:    USGovWest,
 	SAEast.Name:       SAEast,
+	CNNorth.Name:      CNNorth,
 }
 
 // Designates a signer interface suitable for signing AWS requests, params
@@ -292,6 +299,13 @@ func GetAuth(accessKey string, secretKey, token string, expiration time.Time) (a
 		return Auth{accessKey, secretKey, token, expiration}, nil
 	}
 
+	// Next try to get auth from the shared credentials file
+	auth, err = SharedAuth()
+	if err == nil {
+		// Found auth, return
+		return
+	}
+
 	// Next try to get auth from the environment
 	auth, err = EnvAuth()
 	if err == nil {
@@ -320,6 +334,7 @@ func GetAuth(accessKey string, secretKey, token string, expiration time.Time) (a
 // EnvAuth creates an Auth based on environment information.
 // The AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment
 // variables are used.
+// AWS_SESSION_TOKEN is used if present.
 func EnvAuth() (auth Auth, err error) {
 	auth.AccessKey = os.Getenv("AWS_ACCESS_KEY_ID")
 	if auth.AccessKey == "" {
@@ -335,6 +350,52 @@ func EnvAuth() (auth Auth, err error) {
 	}
 	if auth.SecretKey == "" {
 		err = errors.New("AWS_SECRET_ACCESS_KEY or AWS_SECRET_KEY not found in environment")
+	}
+
+	auth.token = os.Getenv("AWS_SESSION_TOKEN")
+	return
+}
+
+// SharedAuth creates an Auth based on shared credentials stored in
+// $HOME/.aws/credentials. The AWS_PROFILE environment variables is used to
+// select the profile.
+func SharedAuth() (auth Auth, err error) {
+	var profileName = os.Getenv("AWS_PROFILE")
+
+	if profileName == "" {
+		profileName = "default"
+	}
+
+	var credentialsFile = os.Getenv("AWS_CREDENTIAL_FILE")
+	if credentialsFile == "" {
+		var homeDir = os.Getenv("HOME")
+		if homeDir == "" {
+			err = errors.New("Could not get HOME")
+			return
+		}
+		credentialsFile = homeDir + "/.aws/credentials"
+	}
+
+	file, err := ini.LoadFile(credentialsFile)
+	if err != nil {
+		err = errors.New("Couldn't parse AWS credentials file")
+		return
+	}
+
+	var profile = file[profileName]
+	if profile == nil {
+		err = errors.New("Couldn't find profile in AWS credentials file")
+		return
+	}
+
+	auth.AccessKey = profile["aws_access_key_id"]
+	auth.SecretKey = profile["aws_secret_access_key"]
+
+	if auth.AccessKey == "" {
+		err = errors.New("AWS_ACCESS_KEY_ID not found in environment in credentials file")
+	}
+	if auth.SecretKey == "" {
+		err = errors.New("AWS_SECRET_ACCESS_KEY not found in credentials file")
 	}
 	return
 }

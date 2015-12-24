@@ -1,27 +1,56 @@
 {
 	"ImportPath": "github.com/impossibleventures/ec2metaproxy",
-	"GoVersion": "go1.5",
+	"GoVersion": "go1.5.2",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/alecthomas/kingpin",
+			"Comment": "v2.0.15-3-g68e47c7",
+			"Rev": "68e47c717a8935987d96afec5ee5f230c8a773ef"
+		},
+		{
+			"ImportPath": "github.com/alecthomas/template",
+			"Rev": "14fd436dd20c3cc65242a9f396b61bfc8a3926fc"
+		},
+		{
+			"ImportPath": "github.com/alecthomas/units",
+			"Rev": "2efee857e7cfd4f3d0138cc3cbb1b4966962b93a"
+		},
+		{
 			"ImportPath": "github.com/cihub/seelog",
-			"Comment": "go1.1",
-			"Rev": "791566c9a7e3d7342f2fc8bc017e1032c8df0e8f"
+			"Comment": "v2.6-1-g3549fbb",
+			"Rev": "3549fbb0ea07f15a54dba3d16ccb22785a813d30"
+		},
+		{
+			"ImportPath": "github.com/davecgh/go-spew/spew",
+			"Rev": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
 		},
 		{
 			"ImportPath": "github.com/fsouza/go-dockerclient",
-			"Rev": "8fb2b14845d00ccc21d8847407d151383ba8ea2a"
+			"Rev": "e0d22d30691bcc996eca51f729a4777b8c7dc2a8"
 		},
 		{
 			"ImportPath": "github.com/goamz/goamz/aws",
-			"Rev": "3b9987e895306d58958a0a145a159e0b2df26679"
+			"Rev": "be371d06631a6ea076cccefc6654fa5c29be074d"
 		},
 		{
 			"ImportPath": "github.com/goamz/goamz/sts",
-			"Rev": "3b9987e895306d58958a0a145a159e0b2df26679"
+			"Rev": "be371d06631a6ea076cccefc6654fa5c29be074d"
+		},
+		{
+			"ImportPath": "github.com/pmezard/go-difflib/difflib",
+			"Rev": "e8554b8641db39598be7f6342874b958f12ae1d4"
 		},
 		{
 			"ImportPath": "github.com/stretchr/testify/assert",
-			"Rev": "8ce79b9f0b77745113f82c17d0756771456ccbd3"
+			"Comment": "v1.0-88-ge3a8ff8",
+			"Rev": "e3a8ff8ce36581f87a15341206f205b1da467059"
+		},
+		{
+			"ImportPath": "github.com/vaughan0/go-ini",
+			"Rev": "a98ad7ee00ec53921f08832bc06ecf7fd600e6a1"
 		}
 	]
 }
