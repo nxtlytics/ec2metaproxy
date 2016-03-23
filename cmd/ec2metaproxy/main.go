@@ -253,8 +253,10 @@ func main() {
 	go func() {
 		for {
 			e := <-dockerEventsChan
-			log.Info("Docker event: %s", e)
-			containerService.SyncContainers()
+			if e.Status == "start" {
+				log.Info("New Docker Container starting: %s", e.From)
+				containerService.SyncContainers()
+			}
 		}
 	}()
 

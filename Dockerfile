@@ -1,4 +1,6 @@
-FROM golang:latest
+FROM golang:alpine
+
+RUN apk add --update git
 
 WORKDIR /go/src/github.com/impossibleventures/ec2metaproxy
 ADD . /go/src/github.com/impossibleventures/ec2metaproxy
