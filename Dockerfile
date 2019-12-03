@@ -1,5 +1,8 @@
 FROM golang:alpine
 
+# Prevent linking against libc
+ENV CGO_ENABLED 0
+
 RUN apk add --update git
 
 WORKDIR /go/src/github.com/nxtlytics/ec2metaproxy
