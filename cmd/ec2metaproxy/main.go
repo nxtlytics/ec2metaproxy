@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/impossibleventures/ec2metaproxy"
+	"github.com/nxtlytics/ec2metaproxy"
 	"github.com/alecthomas/kingpin"
 	log "github.com/cihub/seelog"
 	"github.com/fsouza/go-dockerclient"
