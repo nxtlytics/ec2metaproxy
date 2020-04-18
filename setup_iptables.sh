@@ -11,7 +11,7 @@ function get_default_interface() {
 
 function get_ip_from_interface() {
     local INTERFACE=$1
-    echo $(ifconfig ${INTERFACE}| sed -n 's/^.*inet addr:\(.*\)Bcast.*$/\1/p')
+    echo $(ip -4 addr show dev ${INTERFACE} primary | grep inet | awk '{split($2,a,"/"); print a[1]}')
 }
 
 function setup_iptables() {
