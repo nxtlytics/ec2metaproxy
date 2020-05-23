@@ -1,4 +1,4 @@
-FROM golang:alpine
+FROM golang:1.14.3-alpine3.11
 
 # Prevent linking against libc
 ENV CGO_ENABLED 0
